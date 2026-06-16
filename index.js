@@ -51,7 +51,6 @@ const CHANNELS_CACHE_KEY = 'vavoo_channels';
 const SIGNATURE_CACHE_KEY = 'vavoo_addon_sig';
 const COUNTRY_SEPARATORS = ['➾', '⟾', '->', '→', '»', '›'];
 const PING_URLS = [
-    'https://www.lokke.app/api/app/ping',
     'https://www.vavoo.tv/api/app/ping'
 ];
 
