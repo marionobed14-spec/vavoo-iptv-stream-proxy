@@ -704,6 +704,7 @@ app.get('/channels.m3u8', async function (req, res) {
             output.push(`${req.protocol}://${req.headers.host}/stream/${encodeURIComponent(channel.id)}`);
         }
 
+        setPlaylistHeaders(res);
         res.send(output.join('\n'));
     } catch (error) {
         console.log('[vavoo] channels.m3u8 error', error.message);
