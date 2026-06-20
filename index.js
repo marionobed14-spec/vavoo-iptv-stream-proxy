@@ -1,4 +1,5 @@
 const { Command } = require('commander');
+const crypto = require('node:crypto');
 const express = require('express');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
@@ -137,6 +138,19 @@ function buildHomePage() {
 
 function normalize(value) {
     return String(value || '').trim().toLowerCase();
+}
+
+function normalizeChannelIdPart(value) {
+    return normalize(value).replace(/\s+/g, ' ');
+}
+
+function getStableChannelId(name, country) {
+    const seed = [
+        normalizeChannelIdPart(country),
+        normalizeChannelIdPart(name)
+    ].join('|');
+
+    return crypto.createHash('sha1').update(seed).digest('hex').slice(0, 22);
 }
 
 function extractCountry(group) {
@@ -427,13 +441,16 @@ async function getAddonSignature() {
 }
 
 function mapCatalogItem(item) {
+    const name = item.name || 'Unknown Channel';
+    const country = extractCountry(item.group);
+
     return {
-        id: String(item?.ids?.id || item?.id || item?.url),
+        id: getStableChannelId(name, country),
         url: item.url,
-        name: item.name || 'Unknown Channel',
+        name,
         logo: item.logo || '',
         group: item.group || '',
-        country: extractCountry(item.group)
+        country
     };
 }
 

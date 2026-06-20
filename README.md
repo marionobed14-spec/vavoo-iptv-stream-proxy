@@ -78,6 +78,7 @@ Behavior:
 
 - Without `country`, the endpoint returns all channels.
 - With `country`, the endpoint returns only matching channels.
+- Stream IDs are local stable hashes derived from the normalized channel country and name.
 
 Each entry points to the local proxy endpoint:
 
@@ -102,11 +103,12 @@ Starts playback for a single channel.
 Example:
 
 ```text
-http://<http-host>:<http-port>/stream/18254938455ea9d58931e4
+http://<http-host>:<http-port>/stream/c3c310d97e0b71830bf4e5
 ```
 
 Behavior:
 
+- `:id` is the local stable hash from the generated playlist, not the upstream catalog ID.
 - The proxy resolves the upstream stream URL and forwards the stream directly.
 - HLS playlists are rewritten so variant playlists, keys, maps, and media segments keep flowing through the local proxy.
 - Upstream TLS certificate validation is disabled because Vavoo currently returns invalid certificates.
