@@ -36,6 +36,7 @@ function getBaseSites(selection) {
 }
 
 const app = express();
+app.set('trust proxy', true);
 app.use((req, res, next) => {
        res.setHeader('Access-Control-Allow-Origin', '*');
        res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
