@@ -5,6 +5,13 @@ const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 
 const NodeCache = require('node-cache');
+process.on('uncaughtException', (err) => {
+       console.error('Exception non gérée (process maintenu actif):', err);
+   });
+   
+   process.on('unhandledRejection', (err) => {
+       console.error('Rejet de promesse non géré (process maintenu actif):', err);
+   });
 
 const program = new Command();
 
